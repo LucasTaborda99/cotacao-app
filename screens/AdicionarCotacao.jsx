@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { Colors } from '@/constants/Colors'; // Ajuste o caminho para o Colors conforme necessário
-import Icon from 'react-native-vector-icons/MaterialIcons'; // Certifique-se de instalar react-native-vector-icons
-import OptionsMenu from '@/components/OptionsMenu'; // Certifique-se de ter o componente OptionsMenu implementado
+import { Colors } from '@/constants/Colors';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import OptionsMenu from '@/components/OptionsMenu';
+import InputField from '@/components/InputField';
+import HeaderComponent from '@/components/HeaderComponent';
 
 const AdicionarCotacao = ({ navigation }) => {
     const [numeroCotacao, setNumeroCotacao] = useState('');
@@ -28,66 +30,29 @@ const AdicionarCotacao = ({ navigation }) => {
     return (
         <View style={styles.container}>
             {/* Topo com menu, logo e ícone de retorno */}
-            <View style={styles.header}>
-                {/* Menu de Opções no canto superior esquerdo */}
-                <View style={styles.menuContainer}>
-                    <OptionsMenu onSelectOption={handleOptionSelect} />
-                </View>
-
-                {/* Imagem pequena centralizada no topo */}
-                <Image
-                    source={require('../assets/images/logo-grupo-fertipar.png')}
-                    style={styles.logo}
-                />
-
-                {/* Ícone de retorno no canto superior direito */}
-                <TouchableOpacity onPress={handleReturn} style={styles.returnIcon}>
-                    <Icon name="arrow-back" size={24}/>
-                </TouchableOpacity>
-            </View>
+            <HeaderComponent
+                handleOptionSelect={handleOptionSelect}
+                handleReturn={handleReturn}
+                styles={headerStyles}
+            />
 
             {/* Campo N° Cotação e Data/Hora */}
             <View style={styles.row}>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>N° Cotação</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite o N° Cotação"
-                        value={numeroCotacao}
-                        onChangeText={setNumeroCotacao}
-                    />
+                    <InputField label="N° Cotação" value={numeroCotacao} onChangeText={setNumeroCotacao} placeholder="Digite o N° Cotação" keyboardType="numeric"/>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Data/Hora</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite a Data/Hora"
-                        value={dataHora}
-                        onChangeText={setDataHora}
-                    />
+                    <InputField label="Data/Hora" value={dataHora} onChangeText={setDataHora} placeholder="Digite a Data/Hora" keyboardType="numeric"/>
                 </View>
             </View>
 
             {/* Campo Data Validade e N° Dias p/ Retirada */}
             <View style={styles.row}>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>Data Validade</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite a Data Validade"
-                        value={dataValidade}
-                        onChangeText={setDataValidade}
-                    />
+                    <InputField label="Data Validade" value={dataValidade} onChangeText={setDataValidade} placeholder="Digite a Data Validade"/>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Text style={styles.label}>N° Dias p/ Retirada</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Digite os Dias"
-                        keyboardType="numeric"
-                        value={diasRetirada}
-                        onChangeText={setDiasRetirada}
-                    />
+                    <InputField label="N° Dias p/ Retirada" value={diasRetirada} onChangeText={setDiasRetirada} placeholder="Digite os Dias" keyboardType="numeric"/>
                 </View>
             </View>
 
@@ -99,7 +64,7 @@ const AdicionarCotacao = ({ navigation }) => {
                     onValueChange={(itemValue) => setSupervisor(itemValue)}
                     style={styles.picker}
                 >
-                    <Picker.Item label="Selecione o Supervisor" value="" color='#000000' />
+                    <Picker.Item label="Selecione o Supervisor" value=""/>
                     <Picker.Item label="Supervisor 1" value="supervisor1" />
                     <Picker.Item label="Supervisor 2" value="supervisor2" />
                 </Picker>
@@ -133,42 +98,18 @@ const styles = StyleSheet.create({
         padding: 20,
         backgroundColor: Colors.light.background,
     },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginBottom: 20,
-        marginTop: 20,
-        width: '100%',
-    },
-    menuContainer: {
-        width: 50,
-        alignItems: 'flex-start',
-        zIndex: 1, // Garantir que o menu fique acima de outros elementos,
-    },
-
-    logo: {
-        width: 50,
-        height: 50,
-        resizeMode: 'contain',
-    },
-    returnIcon: {
-        width: 50,
-        alignItems: 'flex-end',
-    },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 15,
     },
     inputContainer: {
         flex: 1,
         marginHorizontal: 5, // Espaçamento entre os inputs
     },
     label: {
-        fontSize: 16,
-        color: '#000000',
+        fontSize: 14,
         marginBottom: 5,
+        color: '#333',
     },
     input: {
         height: 40,
@@ -189,9 +130,10 @@ const styles = StyleSheet.create({
     picker: {
         height: 52,             // Define uma altura apropriada
         color: Colors.dark.text, // Ajusta a cor do texto
+        padding: 0,
     },
     button: {
-        backgroundColor: Colors.primary,
+        backgroundColor: 'black',
         paddingVertical: 10,
         alignItems: 'center',
         borderRadius: 5,
@@ -202,6 +144,29 @@ const styles = StyleSheet.create({
     },
 });
 
-
+// Estilo específico para o HeaderComponent
+const headerStyles = StyleSheet.create({
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+        marginTop: 20,
+        width: '100%',
+    },
+    menuContainer: {
+        width: 50,
+        alignItems: 'flex-start',
+    },
+    logo: {
+        width: 50,
+        height: 50,
+        resizeMode: 'contain',
+    },
+    returnIcon: {
+        width: 50,
+        alignItems: 'flex-end',
+    },
+});
 
 export default AdicionarCotacao;
