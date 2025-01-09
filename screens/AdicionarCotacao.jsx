@@ -16,11 +16,16 @@ const AdicionarCotacao = ({ navigation }) => {
     const [gerente, setGerente] = useState('');
 
     const handleOptionSelect = (option) => {
-        console.log('Opção selecionada:', option);
+        //console.log('Opção selecionada:', option);
     };
 
+    const handleNumeroCotacaoChange = (text) => {
+        const numericText = text.replace(/[^0-9]/g, '');
+        setNumeroCotacao(numericText);
+    }
+
     const handleReturn = () => {
-        navigation.navigate('Options'); // Substitua 'OptionsScreen' pelo nome correto da tela
+        navigation.navigate('Options');
     };
 
     const handleSubmit = () => {
@@ -39,7 +44,7 @@ const AdicionarCotacao = ({ navigation }) => {
             {/* Campo N° Cotação e Data/Hora */}
             <View style={styles.row}>
                 <View style={styles.inputContainer}>
-                    <InputField label="N° Cotação" value={numeroCotacao} onChangeText={setNumeroCotacao} placeholder="Digite o N° Cotação" keyboardType="numeric"/>
+                    <InputField label="N° Cotação" value={numeroCotacao} onChangeText={handleNumeroCotacaoChange} placeholder="Digite o N° Cotação" keyboardType="numeric"/>
                 </View>
                 <View style={styles.inputContainer}>
                     <InputField label="Data/Hora" value={dataHora} onChangeText={setDataHora} placeholder="Digite a Data/Hora" keyboardType="numeric"/>
@@ -157,6 +162,7 @@ const headerStyles = StyleSheet.create({
     menuContainer: {
         width: 50,
         alignItems: 'flex-start',
+        zIndex: 1,
     },
     logo: {
         width: 50,

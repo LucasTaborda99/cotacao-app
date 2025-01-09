@@ -14,7 +14,7 @@ const ListarCotacoes = ({ navigation }) => {
     };
 
     const handleReturn = () => {
-        navigation.navigate('Options'); // Substitua 'OptionsScreen' pelo nome correto da tela
+        navigation.navigate('Options');
     };
 
     return (

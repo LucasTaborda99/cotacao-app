@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Colors } from '@/constants/Colors';
 import Icons from 'react-native-vector-icons/MaterialIcons'
+import { Alert } from 'react-native';
 
 const OptionsMenu = ({ onSelectOption }) => {
     const [isVisible, setIsVisible] = useState(false);
+    const navigation = useNavigation();
 
     const toggleMenu = () => {
         setIsVisible(!isVisible);
     };
 
     const handleOptionSelect = (option) => {
-        onSelectOption(option);
+        if(option === 'Sair') {
+            navigation.navigate('Login');
+        } else if(option === 'Conta') {
+            // navigation.navigate('Conta');
+            // Alert.alert('Conta');
+        } else {
+            onSelectOption(option);
+        }
         toggleMenu();
     };
 
@@ -26,7 +36,7 @@ const OptionsMenu = ({ onSelectOption }) => {
             {isVisible && (
                 <View style={styles.menu}>
                     <TouchableOpacity onPress={() => handleOptionSelect('Conta')} style={styles.menuItem}>
-                    {/* Ícone de usuário */}
+                        {/* Ícone de usuário */}
                         <Icons name="account-circle" size={24} color={Colors.light.text} style={styles.icon} />
                         <Text style={styles.option}>Conta</Text>
                     </TouchableOpacity>
@@ -64,6 +74,8 @@ const styles = StyleSheet.create({
     rotateLine1: {
         transform: [{ rotate: '45deg' }],
         position: 'absolute',
+        top: 13, // Posiciona a linha no meio
+        left: 5, // Posiciona a linha no meio
     },
     rotateLine2: {
         opacity: 0, // Esconde a linha do meio
@@ -71,6 +83,8 @@ const styles = StyleSheet.create({
     rotateLine3: {
         transform: [{ rotate: '-45deg' }],
         position: 'absolute',
+        top: 13, // Posiciona a linha no meio
+        left: 5, // Posiciona a linha no meio
     },
     menu: {
         backgroundColor: Colors.light.background,
