@@ -37,12 +37,12 @@ const OptionsMenu = ({ onSelectOption }) => {
                 <View style={styles.menu}>
                     <TouchableOpacity onPress={() => handleOptionSelect('Conta')} style={styles.menuItem}>
                         {/* Ícone de usuário */}
-                        <Icons name="account-circle" size={24} color={Colors.light.text} style={styles.icon} />
+                        <Icons name="account-circle" size={24} color={Colors.light.primary} style={styles.icon} />
                         <Text style={styles.option}>Conta</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => handleOptionSelect('Sair')} style={styles.menuItem}>
                         {/* Ícone de sair */}
-                        <Icons name="exit-to-app" size={24} color={Colors.light.text} style={styles.icon} />
+                        <Icons name="exit-to-app" size={24} color={Colors.light.primary} style={styles.icon} />
                         <Text style={styles.option}>Sair</Text>
                     </TouchableOpacity>
                 </View>
